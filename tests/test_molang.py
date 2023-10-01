@@ -1,4 +1,5 @@
 import pytest
+import math
 from pymolang import Scanner
 
 def test_scan_parse():
