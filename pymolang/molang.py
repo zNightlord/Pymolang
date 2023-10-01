@@ -177,7 +177,7 @@ class Scanner():
             return self.make_token(TokenType.BREAK)
         if name == 'math':
             return self.make_token(TokenType.MATH)
-        # math keywords
+        # math keywo
         if name == "sin":
             return self.make_token(TokenType.SINE)
         if name == 'var' or name == 'variable' or name == 'v':
@@ -308,18 +308,4 @@ class Scanner():
         r += add
       return r
      
-    
-    @classmethod
-    def output(cls, source: str):
-      scanner = Scanner(source)
-      tokens = scanner.output_tokens()
-      expr = scanner.output_pyexpression()
-      print("\n")
-      print(tokens)
-      print("\n")
-      print(expr)
-      print("\n")
-      try: 
-        print(eval(expr))
-      except:
-        print("error")
+      

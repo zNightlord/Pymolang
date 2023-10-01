@@ -5,8 +5,18 @@ def test_scan_parse():
   # [[variable, VAR], [., DOT], [particle_age, IDENTIFIER], [>, GREATER], [5.3, FLOAT], [+, PLUS], [v, VAR], [., DOT], [particle_random3, IDENTIFIER]]
   particle_age = 5
   particle_random3 = 1
-  Scanner.output("variable.particle_age > 5.3 + math.sin(v.particle_random3)")
+  scanner = Scanner("variable.particle_age > 5.3 + math.sin(v.particle_random3)")
+  print(scanner.output_tokens())
+  expr = scanner.output_pyexpression()  
+  print("\n")
+  print(expr)
+  print("\n")
+  try: 
+    print(eval(expr))
+  except:
+    print("error")
   
 def test_float():
-  Scanner.output("5")
+  scanner = Scanner("5")
+  print(scanner.output_tokens())
   
