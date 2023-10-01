@@ -2,7 +2,8 @@ import pytest
 from pymolang import Scanner
 
 def test_scan_parse():
-  # [[variable, VAR], [., DOT], [particle_age, IDENTIFIER], [>, GREATER], [5.3, FLOAT], [+, PLUS], [v, VAR], [., DOT], [particle_random3, IDENTIFIER]]
+  particle_age = 5
+  particle_random3 = 1
   scanner = Scanner("variable.particle_age > 5.3 + math.sin(v.particle_random3)")
   print(scanner.output_tokens())
   expr = scanner.output_pyexpression()  
@@ -10,12 +11,12 @@ def test_scan_parse():
   print(expr)
   print("\n") 
   
-  import math
+  expr = "import math\n"+expr
   try: 
-    print(eval(expr, {"particle_age":  5, "particle_random3": 1}))
+    print(eval(expr, {"particle_age": particle_age, "particle_random3": particle_random3}))
   except Exception as e:
     print("error ", e )
-  print("\n Expected: ", eval("particle_age > 5.3 + math.sin( particle_random3)", {"particle_age":  5, "particle_random3": 1}))
+  print(f"\n Expected: {particle_age > 5.3 + math.sin( particle_random3)}")
   
 def test_float():
   scanner = Scanner("5")
