@@ -38,7 +38,6 @@ class TokenType(IntEnum):
 
     # Literals.
     IDENTIFIER = auto()
-    INT = auto() # Molang only has float but since there int and int operations (soon) in Blender
     FLOAT = auto()
     STRING = auto()
     VAR = auto()
@@ -180,6 +179,12 @@ class Scanner():
         # math keywo
         if name == "sin":
             return self.make_token(TokenType.SINE)
+        if name == "cos":
+            return self.make_token(TokenType.COSINE)
+        if name == "power":
+            return self.make_token(TokenType.POWER)
+        if name == "abs":
+            return self.make_token(TokenType.ABS)
         if name == 'var' or name == 'variable' or name == 'v':
           return self.make_token(TokenType.VAR)
         
@@ -196,9 +201,6 @@ class Scanner():
         while self.peek().isdecimal():
             self.advance()
         if self.peek() == '.':
-            # if self.peek_next().isalpha():
-            #     # Syntax like 5.sin()
-            #    return self.make_token(TokenType.INT)
             self.advance()
             return self.float()
         return self.make_token(TokenType.FLOAT)
@@ -285,9 +287,6 @@ class Scanner():
         elif c == '!':
             if self.match('='):
                 return self.make_token(TokenType.BANG_EQUAL)
-            # return self.error_token('Expected "=" after "!"')
-        # elif c == '#':
-        #     return self.python()
         elif c == "'" or c == '"':
             return self.string(closing=c)
         
@@ -302,7 +301,7 @@ class Scanner():
       for i,t in enumerate(self.tokens):
         
         if t.token_type in [TokenType.VAR, TokenType.DOT]:
-          if not (i+1 < len(self.tokens) and self.tokens[i+1].token_type in [TokenType.SINE]):
+          if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
             continue
         add = f"{t.lexeme}"
         if t.token_type in [TokenType.SINE, TokenType.MATH]:
