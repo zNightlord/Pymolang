@@ -304,6 +304,7 @@ class Scanner():
     def output_pyexpression(self):
       r = []
       for t in self.tokens:
+        print(t)
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
         r.append(t)
