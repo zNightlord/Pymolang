@@ -97,7 +97,6 @@ class Scanner():
     def __init__(self, source: str) -> None:
         """ Initialize the scanner with source code to scan """
         self.reset(source)
-        self.result_tokens = []
 
     def reset(self, source: str) -> None:
         # Place a sentinel at the end of the string
@@ -303,6 +302,7 @@ class Scanner():
     
     def output_pyexpression(self):
       r = []
+      print(self.tokens)
       for t in self.tokens:
         print(t)
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
