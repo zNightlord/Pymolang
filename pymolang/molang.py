@@ -302,9 +302,10 @@ class Scanner():
       for i,t in enumerate(self.tokens):
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        if not (
-          t.token_type in [TokenType.SINE] or self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]):
-          add = f"{t.lexeme} "
+        if not t.token_type in [TokenType.SINE]:
+            add = f"{t.lexeme} "
+        elif i < len(self.tokens) and self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]:
+          add = str(t.lexeme)
         else:
           add = str(t.lexeme)
         r += add
