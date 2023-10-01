@@ -12,7 +12,7 @@ def test_scan_parse():
   try: 
     print(eval(expr, {"particle_age":  5, "particle_random3": 1}))
   except Exception as e:
-    print("error ", )
+    print("error ", e )
   
 def test_float():
   scanner = Scanner("5")
