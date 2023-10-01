@@ -1,5 +1,5 @@
 from enum import IntEnum, auto
-from typing import Union
+from typing import Union, List
 
 
 # See: https://craftinginterpreters.com/scanning-on-demand.html
@@ -291,18 +291,22 @@ class Scanner():
         
         return self.error_token('Unrecognized token')
     
-    def output_tokens(self):
+    @property
+    def tokens(self) -> List[Token]:
       tokens = []
       while (token := self.scan_token()).token_type != TokenType.EOL:
         tokens.append(token)
-      self.result_tokens = tokens
+      return tokens
+      
+    def output_tokens(self):
+      return self.tokens
     
     def output_pyexpression(self):
-      r = []
-      for t in self.result_tokens:
+      r = ""
+      for t in self.tokens:
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        r.append(t)
+        r.join(t.lexeme)
       return r
     
     @classmethod
@@ -314,4 +318,8 @@ class Scanner():
       print(tokens)
       print("\n")
       print(expr)
-      
+      print("\n")
+      try: 
+        print(eval(expr))
+      except:
+        print("error")
