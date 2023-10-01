@@ -13,7 +13,7 @@ def test_scan_parse():
   print("\n") 
   expr = f"import math\nprint({expr})"
   try: 
-    eval(expr, {"particle_age": particle_age, "particle_random3": particle_random3})
+    exec(expr, {"particle_age": particle_age, "particle_random3": particle_random3})
   except Exception as e:
     print("error ", e )
     
