@@ -305,7 +305,7 @@ class Scanner():
         add = ""
         if t.token_type in [TokenType.SINE]:
             add = f"{t.lexeme}"
-        if i < len(self.tokens):
+        if i+1 < len(self.tokens):
           if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]:
             add = f"{t.lexeme}"
           else:
