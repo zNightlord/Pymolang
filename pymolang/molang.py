@@ -301,7 +301,8 @@ class Scanner():
       for t in self.tokens:
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        r.join(t.lexeme)
+        print(t.lexeme)
+        r.join(str(t.lexeme))
       return r
     
     @classmethod
