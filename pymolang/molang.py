@@ -189,7 +189,17 @@ class Scanner():
         return self.keyword()
     
     # Although in Molang Value is Float no Integer but keep it anyway for type but still use the value node
-
+    def number(self) -> Token:
+        while self.peek().isdecimal():
+            self.advance()
+        if self.peek() == '.':
+            # if self.peek_next().isalpha():
+            #     # Syntax like 5.sin()
+            #     return self.make_token(TokenType.INT)
+            self.advance()
+            return self.float()
+        return self.make_token(TokenType.FLOAT)
+        
     def float(self) -> Token:
         """ 
         Find a floating point number from the current position.
@@ -201,8 +211,8 @@ class Scanner():
     
     def math(self) -> Token:
         """
+        Math
         """
-        print('meth')
         while self.peek().isdecimal():
             self.advance()
         if self.peek() == '.':
