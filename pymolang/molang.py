@@ -1,5 +1,5 @@
 from enum import IntEnum, auto
-from typing import Union
+from typing import Union, List
 
 
 # See: https://craftinginterpreters.com/scanning-on-demand.html
@@ -38,7 +38,6 @@ class TokenType(IntEnum):
 
     # Literals.
     IDENTIFIER = auto()
-    INT = auto() # Molang only has float but since there int and int operations (soon) in Blender
     FLOAT = auto()
     STRING = auto()
     VAR = auto()
@@ -97,6 +96,9 @@ class Scanner():
     def __init__(self, source: str) -> None:
         """ Initialize the scanner with source code to scan """
         self.reset(source)
+        self.tokens = []
+        while (token := self.scan_token()).token_type != TokenType.EOL:
+          self.tokens.append(token)
 
     def reset(self, source: str) -> None:
         # Place a sentinel at the end of the string
@@ -174,6 +176,15 @@ class Scanner():
             return self.make_token(TokenType.BREAK)
         if name == 'math':
             return self.make_token(TokenType.MATH)
+        # math keywo
+        if name == "sin":
+            return self.make_token(TokenType.SINE)
+        if name == "cos":
+            return self.make_token(TokenType.COSINE)
+        if name == "power":
+            return self.make_token(TokenType.POWER)
+        if name == "abs":
+            return self.make_token(TokenType.ABS)
         if name == 'var' or name == 'variable' or name == 'v':
           return self.make_token(TokenType.VAR)
         
@@ -186,6 +197,13 @@ class Scanner():
         return self.keyword()
     
     # Although in Molang Value is Float no Integer but keep it anyway for type but still use the value node
+    def number(self) -> Token:
+        while self.peek().isdecimal():
+            self.advance()
+        if self.peek() == '.':
+            self.advance()
+            return self.float()
+        return self.make_token(TokenType.FLOAT)
 
     def float(self) -> Token:
         """ 
@@ -196,19 +214,6 @@ class Scanner():
             self.advance()
         return self.make_token(TokenType.FLOAT)
     
-    def math(self) -> Token:
-        """
-        """
-        print('meth')
-        while self.peek().isdecimal():
-            self.advance()
-        if self.peek() == '.':
-          if self.peek_next().isalpha():
-            c = self.advanced()
-            if c == "sin":
-              return self.make_token(TokenType.SINE)
-        return self.make_token(TokenType.MATH)
-
     def scan_token(self) -> Token:
         self.skip_whitespace()
         self.start = self.current
@@ -229,7 +234,7 @@ class Scanner():
         if c.isalpha():
             return self.identifier()
         elif (c.isdecimal()):
-            return self.float()
+            return self.number()
 
         # Check for single character tokens:
         elif c == '(':
@@ -282,25 +287,35 @@ class Scanner():
         elif c == '!':
             if self.match('='):
                 return self.make_token(TokenType.BANG_EQUAL)
-            # return self.error_token('Expected "=" after "!"')
-        # elif c == '#':
-        #     return self.python()
         elif c == "'" or c == '"':
             return self.string(closing=c)
         
         return self.error_token('Unrecognized token')
-    
-    @classmethod
-    def output(cls, source: str):
-      scanner = Scanner(source)
-      tokens = []
-      while (token := scanner.scan_token()).token_type != TokenType.EOL:
-          tokens.append(token)
-      print(tokens)
       
-if __name__ == '__main__':
-  
-  # [[variable, VAR], [., DOT], [particle_age, IDENTIFIER], [>, GREATER], [5.3, FLOAT], [+, PLUS], [v, VAR], [., DOT], [particle_random3, IDENTIFIER]]
-
-  
-  
+    def output_tokens(self):
+      return self.tokens
+    
+    def output_pyexpression(self):
+      r = ""
+      
+      for i,t in enumerate(self.tokens):
+        
+        if t.token_type in [TokenType.VAR, TokenType.DOT]:
+          if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
+            continue
+        add = f"{t.lexeme}"
+        if t.token_type in [TokenType.SINE, TokenType.MATH]:
+            add = f"{t.lexeme}"
+        else:
+          if i+1 < len(self.tokens):
+            if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN]:
+              add = f"{t.lexeme}"
+            elif t.token_type == TokenType.DOT and self.tokens[i+1].token_type in [TokenType.SINE]:
+              add = f"{t.lexeme}"
+            else:
+              add = f"{t.lexeme} "
+        r += add
+        
+      return r
+     
+      

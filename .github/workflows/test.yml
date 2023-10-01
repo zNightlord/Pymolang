@@ -4,10 +4,10 @@
 name: Python application
 
 on:
-  push:
-    branches: [ "main" ]
+  # push:
+  #   branches: [ "molang" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
