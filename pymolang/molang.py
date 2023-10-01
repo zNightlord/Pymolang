@@ -177,6 +177,9 @@ class Scanner():
             return self.make_token(TokenType.BREAK)
         if name == 'math':
             return self.make_token(TokenType.MATH)
+        # math keywords
+        if name == "sin":
+            return self.make_token(TokenType.SINE)
         if name == 'var' or name == 'variable' or name == 'v':
           return self.make_token(TokenType.VAR)
         
@@ -195,7 +198,7 @@ class Scanner():
         if self.peek() == '.':
             # if self.peek_next().isalpha():
             #     # Syntax like 5.sin()
-            #     return self.make_token(TokenType.INT)
+            #    return self.make_token(TokenType.INT)
             self.advance()
             return self.float()
         return self.make_token(TokenType.FLOAT)
@@ -209,18 +212,6 @@ class Scanner():
             self.advance()
         return self.make_token(TokenType.FLOAT)
     
-    def math(self) -> Token:
-        """
-        """
-        while self.peek().isdecimal():
-            self.advance()
-        if self.peek() == '.':
-          if self.peek_next().isalpha():
-            c = self.advanced()
-            if c == "sin":
-              return self.make_token(TokenType.SINE)
-        return self.make_token(TokenType.MATH)
-
     def scan_token(self) -> Token:
         self.skip_whitespace()
         self.start = self.current
