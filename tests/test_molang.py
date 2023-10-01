@@ -1,3 +1,4 @@
+import math
 import pytest
 from pymolang import Scanner
 
@@ -8,7 +9,7 @@ def test_scan_parse():
   expr = scanner.output_pyexpression()  
   print("\n")
   print(expr)
-  print("\n")
+  print("\n") 
   try: 
     print(eval(expr, {"particle_age":  5, "particle_random3": 1}))
   except Exception as e:

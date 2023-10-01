@@ -300,8 +300,8 @@ class Scanner():
       r = ""
       
       for i,t in enumerate(self.tokens):
-        if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
-          continue
+        # if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
+        #  continue
         add = f"{t.lexeme}"
         if t.token_type in [TokenType.SINE]:
             add = f"{t.lexeme}"
