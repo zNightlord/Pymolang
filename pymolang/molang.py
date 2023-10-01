@@ -297,11 +297,11 @@ class Scanner():
       return self.tokens
     
     def output_pyexpression(self):
-      r = []
+      r = " "
       for t in self.tokens:
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        r.append(t.lexeme)
+        r.join(t.lexeme)
       return r
     
     @classmethod
@@ -314,7 +314,7 @@ class Scanner():
       print("\n")
       print(expr)
       print("\n")
-      # try: 
-      #   print(eval(expr))
-      # except:
-      #   print("error")
+      try: 
+        print(eval(expr))
+      except:
+        print("error")
