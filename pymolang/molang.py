@@ -97,6 +97,9 @@ class Scanner():
     def __init__(self, source: str) -> None:
         """ Initialize the scanner with source code to scan """
         self.reset(source)
+        self.tokens = []
+        while (token := self.scan_token()).token_type != TokenType.EOL:
+          self.tokens.append(token)
 
     def reset(self, source: str) -> None:
         # Place a sentinel at the end of the string
@@ -289,20 +292,13 @@ class Scanner():
             return self.string(closing=c)
         
         return self.error_token('Unrecognized token')
-    
-    @property
-    def tokens(self) -> List[Token]:
-      tokens = []
-      while (token := self.scan_token()).token_type != TokenType.EOL:
-        tokens.append(token)
-      return tokens
       
     def output_tokens(self):
       return self.tokens
     
     def output_pyexpression(self):
       r = []
-      for t in self.output_tokens():
+      for t in self.tokens:
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
         r.append(t.lexeme)
