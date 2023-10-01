@@ -15,6 +15,7 @@ def test_scan_parse():
     print(eval(expr, {"particle_age":  5, "particle_random3": 1}))
   except Exception as e:
     print("error ", e )
+  print("\n Expected: ", eval("particle_age > 5.3 + math.sin( particle_random3)", {"particle_age":  5, "particle_random3": 1}))
   
 def test_float():
   scanner = Scanner("5")
