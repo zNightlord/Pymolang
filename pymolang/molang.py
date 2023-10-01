@@ -302,12 +302,10 @@ class Scanner():
     
     def output_pyexpression(self):
       r = []
-      print(self.tokens)
-      for t in self.tokens:
-        print(t)
+      for t in self.output_tokens():
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        r.append(t)
+        r.append(t.lexeme)
       return r
     
     @classmethod
