@@ -298,9 +298,3 @@ class Scanner():
           tokens.append(token)
       print(tokens)
       
-if __name__ == '__main__':
-  
-  # [[variable, VAR], [., DOT], [particle_age, IDENTIFIER], [>, GREATER], [5.3, FLOAT], [+, PLUS], [v, VAR], [., DOT], [particle_random3, IDENTIFIER]]
-
-  
-  
