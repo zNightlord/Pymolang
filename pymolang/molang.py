@@ -195,7 +195,7 @@ class Scanner():
         if self.peek() == '.':
             # if self.peek_next().isalpha():
             #     # Syntax like 5.sin()
-            #    return self.make_token(TokenType.INT)
+                return self.make_token(TokenType.INT)
             self.advance()
             return self.float()
         return self.make_token(TokenType.FLOAT)
@@ -306,12 +306,16 @@ class Scanner():
       return self.tokens
     
     def output_pyexpression(self):
-      r = []
+      r = ""
       for t in self.tokens:
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        r.append(str(t.lexeme))
-      return " ".join(r)
+        if not t.token_type in [TokenType.SINE, TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]:
+          add = f"{t.lexeme} "
+        else:
+          add = str(t.lexeme)
+        r += add
+      return r
      
     
     @classmethod
