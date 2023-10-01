@@ -13,8 +13,8 @@ def test_scan_parse():
   print("\n")
   try: 
     print(eval(expr))
-  except:
-    print("error")
+  except Exception as e:
+    print("error ", )
   
 def test_float():
   scanner = Scanner("5")

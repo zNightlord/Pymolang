@@ -298,14 +298,17 @@ class Scanner():
     
     def output_pyexpression(self):
       r = ""
-      for t in self.tokens:
+      
+      for i,t in enumerate(self.tokens):
         if t.token_type in [TokenType.VAR, TokenType.DOT, TokenType.MATH]:
           continue
-        if not t.token_type in [TokenType.SINE, TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]:
+        if not (
+          t.token_type in [TokenType.SINE] or self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE]):
           add = f"{t.lexeme} "
         else:
           add = str(t.lexeme)
         r += add
+        
       return r
      
       
