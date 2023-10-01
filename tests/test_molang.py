@@ -12,8 +12,9 @@ def test_scan_parse():
   print("\n")
   expr = f"import math\nprint({expr})"
   exec(expr, {"particle_age": particle_age, "particle_random3": particle_random3})
+  print("\n")
   
 def test_float():
   scanner = Scanner("5")
-  print(scanner.output_tokens())
+  # print(scanner.output_tokens())
   
