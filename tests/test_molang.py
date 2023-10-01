@@ -11,12 +11,11 @@ def test_scan_parse():
   print("\n")
   print(expr)
   print("\n") 
-  
-  expr = "import math\n"+expr
   try: 
     print(eval(expr, {"particle_age": particle_age, "particle_random3": particle_random3}))
   except Exception as e:
     print("error ", e )
+    
   print(f"\n Expected: {particle_age > 5.3 + math.sin( particle_random3)}")
   
 def test_float():
