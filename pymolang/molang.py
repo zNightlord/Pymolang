@@ -316,7 +316,7 @@ class Scanner():
           if i+1 < len(self.tokens):
             if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN]:
               add = f"{t.lexeme}"
-            elif t.token_type in [TokenType.DOT, TokenType.SUBTRACT] and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE, TokenType.FLOA]:
+            elif t.token_type in [TokenType.DOT, TokenType.SUBTRACT] and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE, TokenType.FLOAT]:
               add = f"{t.lexeme}"
             else:
               add = f"{t.lexeme} "
