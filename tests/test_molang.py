@@ -19,9 +19,13 @@ def test_float():
   print(scanner.output_tokens())
 
 def test_query_animtime():
-  scanner = Scanner("-5.0 * Math.cos(297.9380535 * query.anim_time) - 5.0")
+  frame = 5
+  source = "-5.0 * Math.cos(297.9380535 * query.anim_time) - 5.0"
+  scanner = Scanner(source)
   print("\n")
   expr = scanner.output_pyexpression()
+  expr = f"from math import cos\nprint(\"{source}: \", {expr})"
+  exec(expr, {"frame": frame})
   print(expr)
 
 def test_variable():
