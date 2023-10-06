@@ -310,16 +310,15 @@ class Scanner():
             continue
         add = f"{t.lexeme}"
         
-        if t.token_type in [TokenType.SINE, TokenType.MATH, TokenType.LEFT_PAREN]:
+        if ((t.token_type in [TokenType.MATH, TokenType.LEFT_PAREN]) 
+          or (i+1 < len(self.tokens) and (i == 0 
+          or self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN] 
+          or (t.token_type in [TokenType.DOT] and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE, TokenType.FLOAT]))
+          )
+        ):
             add = f"{t.lexeme}"
         else:
-          if i+1 < len(self.tokens):
-            if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN]:
-              add = f"{t.lexeme}"
-            elif t.token_type in [TokenType.DOT, TokenType.SUBTRACT] and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE, TokenType.FLOAT]:
-              add = f"{t.lexeme}"
-            else:
-              add = f"{t.lexeme} "
+            add = f"{t.lexeme} "
         if t.lexeme == "anim_time":
             add = f"frame"
         if t.token_type == TokenType.SEMICOLON:
