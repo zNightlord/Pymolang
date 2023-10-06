@@ -305,8 +305,8 @@ class Scanner():
       
       for i,t in enumerate(self.tokens):
         
-        if t.token_type in [TokenType.VAR, TokenType.QUERY, TokenType.DOT]:
-          if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
+        if t.token_type in [TokenType.VAR, TokenType.QUERY, TokenType.DOT, TokenType.MATH]:
+          # if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
             continue
         add = f"{t.lexeme}"
         

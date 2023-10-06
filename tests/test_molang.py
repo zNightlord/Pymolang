@@ -20,6 +20,7 @@ def test_float():
 
 def test_query_animtime():
   scanner = Scanner("-5.0 * Math.cos(297.9380535 * query.anim_time) - 5.0")
+  print("\n")
   expr = scanner.output_pyexpression()
   print(expr)
   
