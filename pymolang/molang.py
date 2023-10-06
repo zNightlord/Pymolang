@@ -175,6 +175,8 @@ class Scanner():
             return self.make_token(TokenType.AND)
         if name == 'break':
             return self.make_token(TokenType.BREAK)
+        if name == 'context':
+            return self.make_token(TokenType.VAR)
         if name == "query":
             return self.make_token(TokenType.QUERY)
         if name == 'math' or name == 'Math':
