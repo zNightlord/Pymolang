@@ -309,15 +309,15 @@ class Scanner():
           if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
             continue
         add = f"{t.lexeme}"
-        if t.lexeme == "anime_time":
-            add = f"#frame"
+        if t.lexeme == "anim_time":
+            add = f"frame"
         if t.token_type in [TokenType.SINE, TokenType.MATH]:
             add = f"{t.lexeme}"
         else:
           if i+1 < len(self.tokens):
             if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN]:
               add = f"{t.lexeme}"
-            elif t.token_type == TokenType.DOT and self.tokens[i+1].token_type in [TokenType.SINE]:
+            elif t.token_type == TokenType.DOT and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE]:
               add = f"{t.lexeme}"
             else:
               add = f"{t.lexeme} "
