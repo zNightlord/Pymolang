@@ -10,7 +10,7 @@ def test_scan_parse():
   expr = scanner.output_pyexpression()
   print(f"\n Expected result: {particle_age > 5.3 + math.sqrt( particle_random3)}")
   print("\n")
-  expr = f"import math\nprint({expr})"
+  expr = f"from math import sqrt\nprint({expr})"
   exec(expr, {"particle_age": particle_age, "particle_random3": particle_random3})
   print("\n")
   
