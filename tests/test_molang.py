@@ -17,4 +17,9 @@ def test_scan_parse():
 def test_float():
   scanner = Scanner("5")
   # print(scanner.output_tokens())
+
+def test_query_animtime():
+  scanner = Scanner("-5.0 * Math.cos(297.9380535 * query.anim_time) - 5.0")
+  expr = scanner.output_pyexpression()
+  print(expr)
   

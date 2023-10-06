@@ -42,6 +42,7 @@ class TokenType(IntEnum):
     STRING = auto()
     VAR = auto()
     MATH = auto()
+    QUERY = auto()
     #
     SINE = auto()
     COSINE = auto()
@@ -174,7 +175,9 @@ class Scanner():
             return self.make_token(TokenType.AND)
         if name == 'break':
             return self.make_token(TokenType.BREAK)
-        if name == 'math':
+        if name == "query":
+            return self.make_token(TokenType.QUERY)
+        if name == 'math' or name == 'Math':
             return self.make_token(TokenType.MATH)
         # math keywo
         if name == "sin":
@@ -300,10 +303,12 @@ class Scanner():
       
       for i,t in enumerate(self.tokens):
         
-        if t.token_type in [TokenType.VAR, TokenType.DOT]:
+        if t.token_type in [TokenType.VAR, TokenType.QUERY, TokenType.DOT]:
           if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
             continue
         add = f"{t.lexeme}"
+        if t.lexeme == "anime_time":
+            add = f"#frame"
         if t.token_type in [TokenType.SINE, TokenType.MATH]:
             add = f"{t.lexeme}"
         else:
