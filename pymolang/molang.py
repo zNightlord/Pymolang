@@ -1,3 +1,5 @@
+import math
+import random
 from enum import IntEnum, auto
 from typing import Union, List
 
@@ -175,6 +177,8 @@ class Scanner():
             return self.make_token(TokenType.AND)
         if name == 'break':
             return self.make_token(TokenType.BREAK)
+        if name == 'context':
+            return self.make_token(TokenType.VAR)
         if name == "query":
             return self.make_token(TokenType.QUERY)
         if name == 'math' or name == 'Math':
@@ -303,24 +307,67 @@ class Scanner():
       
       for i,t in enumerate(self.tokens):
         
-        if t.token_type in [TokenType.VAR, TokenType.QUERY, TokenType.DOT]:
-          if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
+        if t.token_type in [TokenType.VAR, TokenType.QUERY, TokenType.DOT, TokenType.MATH]:
+          # if not (i-1 < len(self.tokens) and self.tokens[i-1].token_type in [TokenType.MATH]):
             continue
         add = f"{t.lexeme}"
-        if t.lexeme == "anime_time":
-            add = f"#frame"
-        if t.token_type in [TokenType.SINE, TokenType.MATH]:
+        
+        if ((t.token_type in [TokenType.MATH, TokenType.LEFT_PAREN]) 
+          or (i+1 < len(self.tokens) and (i == 0 
+          or self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN] 
+          or (t.token_type in [TokenType.DOT] and self.tokens[i+1].token_type in [TokenType.SINE, TokenType.COSINE, TokenType.FLOAT]))
+          )
+        ):
             add = f"{t.lexeme}"
         else:
-          if i+1 < len(self.tokens):
-            if self.tokens[i+1].token_type in [TokenType.RIGHT_PAREN, TokenType.RIGHT_SQUARE_BRACKET, TokenType.RIGHT_BRACE, TokenType.LEFT_PAREN]:
-              add = f"{t.lexeme}"
-            elif t.token_type == TokenType.DOT and self.tokens[i+1].token_type in [TokenType.SINE]:
-              add = f"{t.lexeme}"
-            else:
-              add = f"{t.lexeme} "
+            add = f"{t.lexeme} "
+        if t.lexeme == "anim_time":
+            add = f"frame"
+        if t.token_type == TokenType.SEMICOLON and i+1 != len(self.tokens):
+            add = "\n"
         r += add
         
       return r
      
-      
+class Math():
+  
+  @classmethod
+  def abs(cls, value: float) -> float:
+    """Absolute value of value"""
+    return abs(value)
+  
+  @classmethod
+  def acos(cls, value: float) -> float:
+    """arccos of value"""
+    return math.acos(value)
+  
+  @classmethod
+  def asin(cls, value: float) -> float:
+    """arcsin of value"""
+    return math.asin(value)
+  
+  @classmethod
+  def atan(cls, value: float) -> float:
+    """arctan of value"""
+    return math.asin(value)
+  
+  @classmethod
+  def atan2(cls, y: float, x: float) -> float:
+    return math.atan2(y,x)
+  
+  @classmethod
+  def ceil(cls, value: float) -> float:
+    return math.ceil(value)
+  
+  @classmethod
+  def random(cls, low: float, high: float) -> float:
+    return random.uniform(low, high)
+  
+  @classmethod
+  def random_integer(cls, low: float, high: float) -> int:
+    return random.randint(low, high)
+    
+  @classmethod
+  def sqrt(cls, value: float) -> float:
+    return math.sqrt(value)
+ 
