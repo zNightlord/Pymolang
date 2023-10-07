@@ -1,3 +1,5 @@
+import math
+import random
 from enum import IntEnum, auto
 from typing import Union, List
 
@@ -321,10 +323,51 @@ class Scanner():
             add = f"{t.lexeme} "
         if t.lexeme == "anim_time":
             add = f"frame"
-        if t.token_type == TokenType.SEMICOLON:
+        if t.token_type == TokenType.SEMICOLON and i+1 != len(self.tokens):
             add = "\n"
         r += add
         
       return r
      
-      
+class Math():
+  
+  @classmethod
+  def abs(cls, value: float) -> float:
+    """Absolute value of value"""
+    return abs(value)
+  
+  @classmethod
+  def acos(cls, value: float) -> float:
+    """arccos of value"""
+    return math.acos(value)
+  
+  @classmethod
+  def asin(cls, value: float) -> float:
+    """arcsin of value"""
+    return math.asin(value)
+  
+  @classmethod
+  def atan(cls, value: float) -> float:
+    """arctan of value"""
+    return math.asin(value)
+  
+  @classmethod
+  def atan2(cls, y: float, x: float) -> float:
+    return math.atan2(y,x)
+  
+  @classmethod
+  def ceil(cls, value: float) -> float:
+    return math.ceil(value)
+  
+  @classmethod
+  def random(cls, low: float, high: float) -> float:
+    return random.uniform(low, high)
+  
+  @classmethod
+  def random_integer(cls, low: float, high: float) -> int:
+    return random.randint(low, high)
+    
+  @classmethod
+  def sqrt(cls, value: float) -> float:
+    return math.sqrt(value)
+ 

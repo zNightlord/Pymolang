@@ -1,6 +1,8 @@
 import pytest
-import math
+import random
+
 from pymolang import Scanner
+from pymolang import Math as math
 
 def test_scan_parse():
   particle_age = 5
@@ -19,14 +21,14 @@ def test_float():
   print(scanner.output_tokens())
 
 def test_query_animtime():
-  frame = 5
+  frame = math.random_integer(1, 9)
   source = "-5.0 * Math.cos(297.9380535 * query.anim_time) - 5.0"
   scanner = Scanner(source)
   print("\n")
   expr = scanner.output_pyexpression()
-  expr = f"from math import cos\nprint(\"{source}: \", {expr})"
+  print(f"Frame number: {frame}")
+  expr = f"from math import cos\nprint(\"{expr}: \", {expr})"
   exec(expr, {"frame": frame})
-  print(expr)
 
 def test_variable():
   source ="v.fall_acc = -0.3;v.wind_acc = 2;v.curve_len = 15;"
